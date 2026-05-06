@@ -451,8 +451,9 @@ async function signIn(){
   if(!email||!password){showAuthError('Please enter email and password.');return;}
   const btn=document.getElementById('signin-btn');
   btn.disabled=true;btn.textContent='Signing in...';
-  const {error}=await sb.auth.signInWithPassword({email,password});
-  if(error){showAuthError(error.message);btn.disabled=false;btn.textContent='Sign in';}
+  const {data,error}=await sb.auth.signInWithPassword({email,password});
+  if(error){showAuthError(error.message);btn.disabled=false;btn.textContent='Sign in';return;}
+  if(data?.session){await bootApp(data.session);}
 }
 async function signUp(){
   const name=document.getElementById('signup-name').value.trim();
@@ -462,9 +463,10 @@ async function signUp(){
   if(password.length<6){showAuthError('Password must be at least 6 characters.');return;}
   const btn=document.getElementById('signup-btn');
   btn.disabled=true;btn.textContent='Creating account...';
-  const {error}=await sb.auth.signUp({email,password,options:{data:{full_name:name}}});
-  if(error){showAuthError(error.message);btn.disabled=false;btn.textContent='Create account';}
-  else{showAuthError('');alert('Account created! Please sign in.');switchAuthTab('signin');btn.disabled=false;btn.textContent='Create account';}
+  const {data,error}=await sb.auth.signUp({email,password,options:{data:{full_name:name}}});
+  if(error){showAuthError(error.message);btn.disabled=false;btn.textContent='Create account';return;}
+  if(data?.session){await bootApp(data.session);}
+  else{showAuthError('');switchAuthTab('signin');btn.disabled=false;btn.textContent='Create account';showAuthError('Account created! Please sign in.');}
 }
 async function signOut(){
   await sb.auth.signOut();

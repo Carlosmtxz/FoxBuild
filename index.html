@@ -8,15 +8,7 @@
 <meta name="apple-mobile-web-app-title" content="Build & Inspect">
 <meta name="theme-color" content="#111111">
 <title>Build & Inspect</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" onerror="loadSupabaseFallback()"></script>
-<script>
-function loadSupabaseFallback(){
-  var s=document.createElement('script');
-  s.src='https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.min.js';
-  s.onerror=function(){document.body.innerHTML='<div style="color:#fff;background:#111;padding:40px;font-family:sans-serif;text-align:center"><h2>⚠️ Network error</h2><p>Could not load the app. Check your internet connection and refresh.</p></div>';};
-  document.head.appendChild(s);
-}
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
@@ -1099,6 +1091,9 @@ function toast(msg){
 // ─────────────────────────────────────────────
 //  BOOT
 // ─────────────────────────────────────────────
+// Show auth screen immediately — don't wait for auth state
+showAuthScreen();
+
 sb.auth.onAuthStateChange(async(event,session)=>{
   if(session){await bootApp(session);}
   else{showAuthScreen();}

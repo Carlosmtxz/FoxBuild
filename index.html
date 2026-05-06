@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-title" content="Build & Inspect">
 <meta name="theme-color" content="#111111">
 <title>Build & Inspect</title>
-<link rel="manifest" href="manifest.json">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -1097,9 +1097,7 @@ sb.auth.onAuthStateChange(async(event,session)=>{
   else{showAuthScreen();}
 });
 
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
+
 </script>
 </body>
 </html>
